@@ -33,6 +33,10 @@ namespace BootsNoteCson
         /// </summary>
         public MarkdownNote markdownNote { get; set; }
         /// <summary>
+        /// 描述，当笔记类型为 <see cref="NoteType.SNIPPET_NOTE" />,此属性才有效
+        /// </summary>
+        public string description { get; set; }
+        /// <summary>
         ///当笔记类型为 <see cref="NoteType.SNIPPET_NOTE" />,则笔记内容在此属性里面
         /// </summary>
         public SnippetNote snippetNote { get; set; }
