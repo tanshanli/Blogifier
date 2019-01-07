@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\plugins\BootsNoteCson\BootsNoteCson.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 

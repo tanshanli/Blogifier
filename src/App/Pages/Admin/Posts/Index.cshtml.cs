@@ -1,5 +1,5 @@
-﻿using BootsNoteCson;
-using Core.Data;
+﻿using Core.Data;
+using Core.Data.OtherModels;
 using Core.Helpers;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;

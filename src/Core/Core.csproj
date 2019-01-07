@@ -16,10 +16,4 @@
     <PackageReference Include="ReverseMarkdown" Version="2.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="BootsNoteCson">
-      <HintPath>..\..\BootsNoteCson\bin\Debug\netcoreapp2.1\BootsNoteCson.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

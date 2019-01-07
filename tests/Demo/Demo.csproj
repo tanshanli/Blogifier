@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\plugins\BootsNoteCson\BootsNoteCson.csproj" />
+    <ProjectReference Include="..\..\src\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>
