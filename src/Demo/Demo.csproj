@@ -5,8 +5,4 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Cson\BootsNoteCson.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using BootsNoteCson;
+using Core.Data;
 using Core.Helpers;
 using Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace App.Pages.Admin.Posts
 
         public async Task<IActionResult> OnGetAsync(int pg = 1, string status = "A")
         {
+            List<NoteModel> noteModels = new List<NoteModel>();
             Blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;
@@ -60,6 +62,7 @@ namespace App.Pages.Admin.Posts
 
         public async Task<IActionResult> OnPostAsync()
         {
+            List<NoteModel> noteModels = new List<NoteModel>();
             Blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == User.Identity.Name);
             IsAdmin = author.IsAdmin;

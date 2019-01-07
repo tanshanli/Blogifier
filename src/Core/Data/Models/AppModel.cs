@@ -10,6 +10,8 @@ namespace Core.Data
         public string ImportTypes { get; set; }
         public string ImageExtensions { get; set; }
         public bool DemoMode { get; set; }
+        public string NotePath { get; set; }
+        public string SyncFloderId { get; set; }
     }
 
     public class BlogItem

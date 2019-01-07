@@ -1,6 +1,5 @@
 ﻿using Core.Data;
 using Core.Services;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -35,6 +34,7 @@ namespace Core.Extensions
             services.AddTransient<IFeedService, FeedService>();
             services.AddTransient<IStorageService, StorageService>();
             services.AddTransient<IImportService, ImportService>();
+            services.AddTransient<IBoostNoteService, BoostNoteService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IWebService, WebService>();
 
@@ -65,9 +65,9 @@ namespace Core.Extensions
                                         AppConfig.EmbeddedThemes = new List<string>();
 
                                     var ar = item.Name.Split('.');
-                                    if(ar.Length > 2 && !AppConfig.EmbeddedThemes.Contains(ar[2]))
+                                    if (ar.Length > 2 && !AppConfig.EmbeddedThemes.Contains(ar[2]))
                                     {
-                                        if(assembly.GetName().Name.ToLower() != "app")
+                                        if (assembly.GetName().Name.ToLower() != "app")
                                         {
                                             AppConfig.EmbeddedThemes.Add(ar[2]);
                                         }

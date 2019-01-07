@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BootsNoteCson
 {
@@ -39,7 +40,7 @@ namespace BootsNoteCson
         /// <summary>
         ///当笔记类型为 <see cref="NoteType.SNIPPET_NOTE" />,则笔记内容在此属性里面
         /// </summary>
-        public SnippetNote snippetNote { get; set; }
+        public List<SnippetNote> snippetNote { get; set; }
         /// <summary>
         /// 是否星标
         /// </summary>

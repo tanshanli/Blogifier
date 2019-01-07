@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace App
@@ -29,6 +30,9 @@ namespace App
               .Enrich.FromLogContext()
               .WriteTo.RollingFile("Logs/{Date}.txt", LogEventLevel.Warning)
               .CreateLogger();
+
+            //List<Class1> testClass = new List<Class1>();
+            //testClass.Add(new Class1() { name = "testName" });
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -49,10 +53,11 @@ namespace App
             {
                 AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
             }
-            
+
             services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient);
 
-            services.AddIdentity<AppUser, IdentityRole>(options => {
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 4;
                 options.Password.RequireNonAlphanumeric = false;

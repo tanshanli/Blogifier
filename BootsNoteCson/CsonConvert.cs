@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace BootsNoteCson
@@ -86,6 +86,7 @@ namespace BootsNoteCson
             {
                 var description = GetMatchValue(value, "description: \"", "\"");
                 noteModel.description = description;
+                noteModel.snippetNote = GetSnippetNotes(value);
             }
             else
             {
@@ -96,11 +97,31 @@ namespace BootsNoteCson
             return noteModel;
         }
 
-        public static string a(string value)
+        public static List<SnippetNote> GetSnippetNotes(string value)
         {
-            StringBuilder builder = new StringBuilder(value);
+            List<SnippetNote> snippetNotes = new List<SnippetNote>();
+            var snippets = GetMatchValues(value, "  {", "\\n  }");
+            foreach (var item in snippets)
+            {
+                snippetNotes.Add(GetSnippetNote(item));
+            }
+            return snippetNotes;
+        }
 
-            return null;
+        public static SnippetNote GetSnippetNote(string value)
+        {
+            SnippetNote snippetNote = new SnippetNote();
+            //名称
+            var name = GetMatchValue(value, "name: \"", "\"");
+            snippetNote.name = name;
+            //编程语言
+            var mode = GetMatchValue(value, "mode: \"", "\"");
+            snippetNote.mode = mode;
+            //内容
+            var content = GetMatchValue(value, "content: '''", "'''", true);
+            snippetNote.content = content;
+
+            return snippetNote;
         }
 
         /// <summary>
@@ -120,6 +141,24 @@ namespace BootsNoteCson
             }
             Regex rg = new Regex($"(?<=({start})){matchStr}(?=({end}))", RegexOptions.Multiline | RegexOptions.Singleline);
             return rg.Match(value).Value;
+        }
+
+        public static List<string> GetMatchValues(string value, string start, string end, bool isGreed = false)
+        {
+            List<string> list = new List<string>();
+
+            var matchStr = ".*?";
+            if (isGreed)
+            {
+                matchStr = ".*";
+            }
+            Regex rg = new Regex($"(?<=({start})){matchStr}(?=({end}))", RegexOptions.Multiline | RegexOptions.Singleline);
+            var matches = rg.Matches(value);
+            for (int i = 0; i < matches.Count; i++)
+            {
+                list.Add(matches[i].Value);
+            }
+            return list;
         }
     }
 }

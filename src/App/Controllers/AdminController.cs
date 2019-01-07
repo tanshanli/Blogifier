@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using BootsNoteCson;
+using Core;
 using Core.Data;
 using Core.Helpers;
 using Core.Services;
@@ -21,14 +22,17 @@ namespace App.Controllers
         IAppService<AppItem> _app;
         UserManager<AppUser> _um;
         IImportService _feed;
+        IBoostNoteService _boostnote;
 
-        public AdminController(IDataService db, IImportService feed, IStorageService ss, UserManager<AppUser> um, IAppService<AppItem> app)
+        public AdminController(IDataService db, IImportService feed, IStorageService ss,
+            UserManager<AppUser> um, IAppService<AppItem> app, IBoostNoteService boostnote)
         {
             _db = db;
             _feed = feed;
             _um = um;
             _ss = ss;
             _app = app;
+            _boostnote = boostnote;
         }
 
         public IActionResult Index()
@@ -39,7 +43,7 @@ namespace App.Controllers
         [HttpDelete]
         public async Task RemovePost(int id)
         {
-            
+
             var post = _db.BlogPosts.Single(p => p.Id == id);
             var author = _db.Authors.Single(a => a.Id == post.AuthorId);
             var user = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
@@ -49,7 +53,7 @@ namespace App.Controllers
             {
                 _db.BlogPosts.Remove(post);
                 _db.Complete();
-            }    
+            }
             await Task.CompletedTask;
         }
 
@@ -82,6 +86,16 @@ namespace App.Controllers
             }
             await Task.CompletedTask;
         }
+
+        [HttpPut]
+        public void SyncBlog()
+        {
+            var models = _boostnote.GetAllNotes(_app.Value.NotePath);
+            string folderid = _app.Value.SyncFloderId;
+            var needSyncNote = models.Where(s => s.folder == folderid).ToList();
+
+        }
+
 
         [Route("assets")]
         public async Task<AssetsModel> GetAssetList(int page = 1, string filter = "", string search = "")
@@ -189,7 +203,7 @@ namespace App.Controllers
         {
             var author = _db.Authors.Single(a => a.AppUserName == User.Identity.Name);
 
-            if(!author.IsAdmin)
+            if (!author.IsAdmin)
                 Redirect("~/pages/shared/_error/403");
 
             var webRoot = Url.Content("~/");
